@@ -1,0 +1,6 @@
+<div class="container-fluid">
+  <div class="col-md-6"><main-map (elementSelected)="relegateZoomToFromMap($event)"></main-map></div>
+  <div class="col-md-6">
+    <geojson-table [initialData]="mapService.tableData" [columns]="columns" (elementSelected)="relegateZoomToFromTable($event)"></geojson-table>
+  </div>
+</div>

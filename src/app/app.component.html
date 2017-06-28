@@ -1,9 +1,4 @@
 <h1>
   {{title}}
 </h1>
-<div class="container-fluid">
-  <div class="col-md-6"><div id="map" style="height:100vh; width:100%" > </div></div>
-  <div class="col-md-6">
-    <div geojson-table [initialData]="initialData" [columns]="columns" (elementSelected)="zoomToMap($event)">
-  </div>
-</div>
+<map-table></map-table>

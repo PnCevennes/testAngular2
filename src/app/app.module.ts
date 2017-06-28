@@ -4,14 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 
-import { AppComponent, TableComponent } from './app.component';
+import { AppComponent, TableComponent,MapComponent,MapTableComponent } from './app.component';
 import {MapService, DataService} from './map.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TableComponent
+    TableComponent,
+    MapComponent,
+    MapTableComponent
   ],
   imports: [
     BrowserModule,
