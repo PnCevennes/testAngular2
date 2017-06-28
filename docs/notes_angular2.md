@@ -71,7 +71,7 @@ One way binding sur les propriétés du DOM
 One way binding sur les propriétés du DOM
 ```
 <!-- [(ngModel)]-->
-<input type="text" [(nbModel)]="personne.nom"></input>
+<input type="text" [(ngModel)]="personne.nom"></input>
 ```
 
 ### Directives Built-in
