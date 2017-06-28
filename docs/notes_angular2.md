@@ -211,16 +211,16 @@ Dans le fichier angular-cli.json rajouter l'appel au css de leaflet
   
 ### Input
 Permet de fournir les propriétés aux composants/directives enfants
+Attribut ```input``` permet de spécifier les paramètres sous la forme d'un tableau ```['nomInterne : nomExterne']```
+```
+@Directive({
+ selector:'[myAtt]',
+ inputs : ['text: myText']
+})
+export class myAttDir {
+ set text(value) {...} //Permet d'être notifié quand la propriété est modifiée
+}
 
-    ```
-    @Directive({
-     selector:'[myAtt]',
-     inputs : ['text: myText']
-    })
-    export class myAttDir {
-     set text(value) {...} //Permet d'être notifié quand la propriété est modifiée
-    }
-    
-    //Usage
-    <div myAtt myText='Message trop cool'></div>
-    ```
+//Usage
+<div myAtt myText='Message trop cool'></div>
+```
