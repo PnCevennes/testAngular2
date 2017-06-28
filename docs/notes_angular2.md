@@ -249,3 +249,6 @@ Déclaration : se déroule en trois étapes
  - déclaration de la sorte via décorateur
  - créer un ```EventEmitter```
  - emettre un événement
+
+### Cycle de vie
+!! Les entrées dun composent ne sont pas évalués dans son constructeur
