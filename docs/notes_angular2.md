@@ -184,3 +184,43 @@ Dans le fichier angular-cli.json rajouter l'appel au css de leaflet
   "../node_modules/leaflet/dist/leaflet.css"
 ],
 ```
+
+## Composants et directives 
+
+- Directives semblable à un composant mais sans template
+
+- Déclaration via des décorateur 
+  - @Component
+  - @Directive
+  
+### Selecteurs
+- types : 
+   - éléments (plutôt réservé au component) ```footer```
+   - classe : ```.altert```
+   - attribut avec ou sans valeur ```[color]``` ou ```[color=red]``` 
+   - combinaison éléments/classe/attribut
+    ```
+    @Directive({
+     selector:'[myAtt]'
+    })
+    export class myAttDir {...}
+    
+    //Usage
+    <div myAtt></div>
+    ```
+  
+### Input
+Permet de fournir les propriétés aux composants/directives enfants
+
+    ```
+    @Directive({
+     selector:'[myAtt]',
+     inputs : ['text: myText']
+    })
+    export class myAttDir {
+     set text(value) {...} //Permet d'être notifié quand la propriété est modifiée
+    }
+    
+    //Usage
+    <div myAtt myText='Message trop cool'></div>
+    ```
