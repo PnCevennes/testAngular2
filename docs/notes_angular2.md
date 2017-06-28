@@ -224,3 +224,28 @@ export class myAttDir {
 //Usage
 <div myAtt myText='Message trop cool'></div>
 ```
+
+Décorateur @input
+```
+@Directive({
+ selector:'[myAtt]',
+})
+export class myAttDir {
+  @Input('MyText') text : string;
+  OU 
+  @Input('MyText')  
+  set text(value) {...}
+}
+
+//Usage
+<div myAtt myText='Message trop cool'></div>
+```
+
+
+### Output
+Les données entre dans un composant par des propriétés et en sorte via des événements. Les événements sont émis via un ```EventEmitter``` et doivent être déclarés dans le décorateur via l'attribut ```outputs``` ou le décorateur ```@output```
+
+Déclaration : se déroule en trois étapes
+ - déclaration de la sorte via décorateur
+ - créer un ```EventEmitter```
+ - emettre un événement
