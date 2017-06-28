@@ -3,18 +3,20 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
+import FeatureCollection = GeoJSON.FeatureCollection;
+
 @Injectable()
 export class DataService {
   private pqUrl = '/api/pq.js';  // URL to web api
-  data:{};
+  data:FeatureCollection<any>;
+  dataTable:Array<any>=[];
   constructor(private http: Http) { 
   }
-
   getJsonData(): Promise<any> {
       return this.http.get(this.pqUrl)
                  .toPromise()
                  .then(response => {
-                   this.data = response.json()
+                    this.data = response.json();
                  })
                  .catch(this.handleError);
   }
@@ -23,7 +25,6 @@ export class DataService {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
-
 }
 
 @Injectable()
