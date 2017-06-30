@@ -1,0 +1,10 @@
+
+.on-map {
+    position: absolute;
+    z-index: 1000;
+}
+
+.bottom {
+    bottom: 0;
+    margin: 5px;
+}

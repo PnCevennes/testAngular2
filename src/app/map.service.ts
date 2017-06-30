@@ -33,6 +33,7 @@ export class DataService {
 export class MapService {
   layer:any;
   tableData:Array<any>;
+  private _initialtableData:Array<any>;
   
   constructor(
     private http: Http, 
@@ -48,6 +49,29 @@ export class MapService {
         newData.push(a);
       });
       this.tableData = newData;
+      this._initialtableData = newData;
+  };
+  
+  filterWithMapBounds(bounds) {
+    var visibleItems = [];
+    this.layer.getLayers().forEach((item) => {
+        try{
+            var _coords = item.getLatLng();
+        }
+        catch(e){
+            var _coords = item.getLatLngs();
+        }
+        if ((bounds.intersects(_coords)) || (bounds.contains(_coords))) {
+            visibleItems.push( this._initialtableData.filter(function(v, index, arr){
+            return v._internal_id == item.feature.properties._internal_id
+          })[0]);
+        }
+    });
+     this.tableData = visibleItems;
+  };
+
+  reinitalizeTableData() {
+    this.tableData = this._initialtableData;
   }
 
 }

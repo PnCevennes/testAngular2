@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+input {
+    color:black;
+}
+
+
+html, body {
+    width: 100%;
+    height: 100%;
+    
+    margin: 0;
+    padding: 0;
+}
+
+.flexbox-parent {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: stretch; /* align items in Cross Axis */
+    align-content: stretch; /* Extra space in Cross Axis */
+
+}
+
+.flexbox-item-grow {
+    flex: 1; /* same as flex: 1 1 auto; */
+}
+
+.fill-area {
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: stretch; /* align items in Cross Axis */
+    align-content: stretch; /* Extra space in Cross Axis */
+    
+}

@@ -21,7 +21,6 @@ export class TableComponent {
   _initialData:Array<any>=[];
   _transformData:Array<any>=[];
   selectedElement:number;
-
   page = new Page(10, 20,0);
 
   @Input() columns : Array<any>;
@@ -50,15 +49,7 @@ export class TableComponent {
     this.elementSelected.emit(id);
   }
 
-  range = (value) => { 
-    let a = []; 
-    for(let i = 0; i < value; ++i) { 
-      a.push(i+1) 
-    } 
-    return a; 
-  };
-
- sort(column:string, order:boolean): void {
+  sort(column:string, order:boolean): void {
     var dataSorted = this.initialData;
     dataSorted.sort(function(a,b) {
       var x = a[column].toLowerCase();
@@ -70,17 +61,6 @@ export class TableComponent {
     this.transformData = dataSorted;
   };
 
-  pageUp(): void{
-    this.page.pageNumber += 1;
-    this.refreshDataTable();
-  };
-
-  pageDown(): void{
-    if(this.page.pageNumber == 0) return;
-    this.page.pageNumber -= 1;
-    this.refreshDataTable();
-  };
-  
   goToPage(i:number): void{
     this.page.pageNumber = i;
     this.refreshDataTable();
@@ -122,6 +102,8 @@ export class MapComponent implements OnInit {
 
   map:any;
   private _select_layer:any;
+  filterWithMap:boolean=false;
+  
 
   @Output() elementSelected = new EventEmitter();
   selectInTable(id:number) {
@@ -143,7 +125,11 @@ export class MapComponent implements OnInit {
       this.mapService.createLayer(this.dataService.data, {onEachFeature: oneach});
       this.mapService.layer.addTo(this.map);
     });
+    this.map.on("moveend", () => {
+          this.getVisibleItems();
+    });
   };
+  
   //Zoom to layer
   zoomToLayer(e) : void {
       if (this._select_layer) {
@@ -164,9 +150,17 @@ export class MapComponent implements OnInit {
   };
 
   //Filtrer avec la carte
+  getVisibleItems():any{
+      if (this.filterWithMap) {
+          this.mapService.filterWithMapBounds(this.map.getBounds());
+      }
+  };
+  
+  toogleFilterMap() {
+    this.filterWithMap = !this.filterWithMap;
+    this.mapService.reinitalizeTableData();
+  }
 }
-
-
 
 @Component({
   selector: 'app-root',
@@ -212,7 +206,7 @@ export class Page {
     //totalElements The total number of elements
     //pageNumber The current page number
     private _pages:number;
-    constructor (private _size: number, public totalElements: number, public pageNumber: number) {
+    constructor (private _size: number, public totalElements: number, private _pageNumber: number) {
       this._pages = totalElements/_size;
     }
     get size():number {
@@ -226,5 +220,25 @@ export class Page {
     get pages():number {
       return this._pages;
     }
+
+    get pageNumber():number {
+      return this._pageNumber;
+    }
+
+    set pageNumber(pageNumber:number) {
+      if ((!pageNumber) || (pageNumber <=0) ) pageNumber=0;
+      if (pageNumber >= this._pages) pageNumber=this._pages-1;
+      this._pageNumber = pageNumber;
+    }
+
+
+    rangePagination():Array<number>{ 
+      let a = []; 
+      let nb = (this.pageNumber > this._pages) ? this._pages : this.pageNumber
+      for(let i=((nb-1 <0) ? 0 : nb-1) ; i <= ((nb+1 >=this._pages) ? this._pages-1 : nb+1); ++i) { 
+        a.push(i+1) 
+      } 
+      return a; 
+    };
 }
 

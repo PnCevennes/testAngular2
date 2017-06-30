@@ -1,34 +1,35 @@
-<div>
-    <table class="table">
+<div  style=  "height: 100%;" >
+    <table class="table table-hover">
         <tr>
-            <th></th>
-            <th *ngFor="let col of columns" (click)="col.sortOrder=!col.sortOrder;sort(col.name, col.sortOrder)">{{col.label}}
-            <span class="glyphicon glyphicon" [ngClass]="(col.sortOrder==true)?'glyphicon-menu-up':'glyphicon-menu-down'" 
-                aria-hidden="true"></span>
+            <th class="mdc-theme--primary"></th>
+            <th class="mdc-theme--primary" *ngFor="let col of columns" (click)="col.sortOrder=!col.sortOrder;sort(col.name, col.sortOrder)">
+                {{col.label}}
+                <i class="material-icons" *ngIf="col.sortOrder==true">keyboard_arrow_down</i>
+                <i class="material-icons" *ngIf="col.sortOrder!=true">keyboard_arrow_up</i>
             </th>
         </tr>
         <tbody>
             <tr *ngFor="let l of data" id="row-{{l._internal_id}}"  
             [ngClass]="selectedElement==l._internal_id ? 'bg-primary': ''" >
-            <td><button type="button" name="button"  class="btn btn-primary" (click)="zoomToMap(l._internal_id)">Zoom</button></td>
+            <td><button md-mini-fab (click)="zoomToMap(l._internal_id)"><i class="material-icons">my_location</i></button></td>
             <td *ngFor="let col of columns">{{l[col.name]}}</td>
             </tr>
         </tbody>
     </table>
-    <input (change)="refreshDataTable()" [(ngModel)]="page.size" type=text/>
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li *ngFor="let int of range(page.pages)" (click)="goToPage(int-1);" [class.active]="int==page.pageNumber+1"><a href="#">{{int}}</a></li>
-        <li>
-            <a (click)="pageUp();" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-        </ul>
-    </nav>
+    <footer>
+        <md-toolbar class="flexbox-item">
+            <input (change)="refreshDataTable()" [(ngModel)]="page.size" type=text color="primary" fxFlex="25"/>
+            <div fxFlex="75">
+                <button  md-raised-button color="primary" fxFlex (click)="goToPage(page.pageNumber-1);" class="flexbox-item">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+                <button md-raised-button *ngFor="let int of page.rangePagination()" (click)="goToPage(int-1);"  
+                    [color]="(int==page.pageNumber+1) ? 'active' : 'primary'" fxFlex class="flexbox-item"><a href="#">{{int}}</a></button>
+
+                <button md-raised-button color="primary" fxFlex (click)="goToPage(page.pageNumber+1);" class="flexbox-item">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </div>
+        </md-toolbar>
+    </footer>
 </div>
